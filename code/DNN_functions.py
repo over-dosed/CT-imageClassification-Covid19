@@ -258,7 +258,7 @@ def update_parameters(params, grads, learning_rate):
 
 def predict(AL,Y):
     AL -= np.max(AL, axis = 0, keepdims = True) #每一列减去最大值
-    r = AL + Y #相机，计算出现的1的数量即为命中数
+    r = AL + Y #相加，计算出现的1的数量即为命中数
     result =(r == 1).sum()
     result /= Y.shape[1]
     return result

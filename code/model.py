@@ -1,7 +1,7 @@
 import time
 import numpy as np
 from numpy.core.fromnumeric import shape
-from mnist_loader import *
+from data_loader import *
 from DNN_functions import *
 
 training_data, test_data = load_data() #导入数据集
@@ -15,14 +15,16 @@ test_Y = test_data[1].T
 
 
 n_x = train_X.shape[0]
+n_y = train_X.shape[1]
 layers_dims = [n_x,30,config.numClass]  #3个大小为 30、20、15的隐藏层
 learning_rate = 0.0075
 
-def L_layer_model(X, Y, layers_dims, learning_rate = 0.75, num_iterations = 3000, print_cost=False):
+def L_layer_model(X, Y, layers_dims, learning_rate = 0.1, num_iterations = 3000, print_cost=False):
     
     np.random.seed(1)
     costs = []      
-    parameters = initialize_parameters_deep(layers_dims) #随机初始化参数
+    #parameters = initialize_parameters_deep(layers_dims) #随机初始化参数
+    parameters = np.load('./model/DNN3000.npy', allow_pickle=True).item()
     start = time.time()
     thisTime = start
 
@@ -41,6 +43,7 @@ def L_layer_model(X, Y, layers_dims, learning_rate = 0.75, num_iterations = 3000
 
             print("Cost after iteration {}: {}".format(i, np.squeeze(cost)))
             print("this time：" + str(elapsed) + "  /  all time: " + str(elapsed_all))
+            print("train accuracy = " + str(predict(AL,train_Y)))
 
         if i % 100 == 0 or i == num_iterations:
             costs.append(cost)
@@ -54,7 +57,7 @@ parameters, costs = L_layer_model(train_X, train_Y, layers_dims, num_iterations 
 
 np.save('./model/DNN3000.npy',parameters)
 
-#parameters = np.load('model/LNN3000.npy', allow_pickle=True).item()
+#parameters = np.load('./model/DNN3000.npy', allow_pickle=True).item()
 
 #将训练好的参数进行测试
 AL,caches = L_model_forward(train_X,parameters)

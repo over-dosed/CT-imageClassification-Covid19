@@ -1,10 +1,12 @@
-downSize = 128
+downSize = 64
 
 trainPath = './train.txt'
 valPath = './val.txt'
 
-trainNum = 5484
-valNum = 1378
 
-numClass = 11
-classes = {"dew":0,"fogsmog":1,"frost":2,"glaze":3,"hail":4,"lightning":5,"rain":6,"rainbow":7,"rime":8,"sandstorm":9,"snow":10}
+#trainNum = 17714
+trainNum = 17714
+valNum = 1969
+
+numClass = 3
+classes = {"NiCT":0,"pCT":1,"nCT":2}
