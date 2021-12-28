@@ -1,6 +1,5 @@
 import time
 import numpy as np
-from numpy.core.fromnumeric import shape
 from data_loader import *
 from DNN_functions import *
 
@@ -16,15 +15,15 @@ test_Y = test_data[1].T
 
 n_x = train_X.shape[0]
 n_y = train_X.shape[1]
-layers_dims = [n_x,30,config.numClass]  #3个大小为 30、20、15的隐藏层
+layers_dims = [n_x,50,30,20,10,config.numClass]  #4个大小为 50、30、20、10的隐藏层
 learning_rate = 0.0075
 
-def L_layer_model(X, Y, layers_dims, learning_rate = 0.1, num_iterations = 3000, print_cost=False):
+def L_layer_model(X, Y, layers_dims, learning_rate = 0.01, num_iterations = 3000, print_cost=False):
     
     np.random.seed(1)
     costs = []      
     #parameters = initialize_parameters_deep(layers_dims) #随机初始化参数
-    parameters = np.load('./model/DNN3000.npy', allow_pickle=True).item()
+    parameters = np.load('./model/DNN3000-1.npy', allow_pickle=True).item()
     start = time.time()
     thisTime = start
 
@@ -35,7 +34,7 @@ def L_layer_model(X, Y, layers_dims, learning_rate = 0.1, num_iterations = 3000,
         grads = L_model_backward(AL, Y, caches)                            #一次向后传播，计算梯度
         parameters = update_parameters(parameters, grads, learning_rate)   #根据梯度更新一次系数
         
-        if print_cost and i % 100 == 0 or i == num_iterations - 1:
+        if print_cost and i % 20 == 0 or i == num_iterations - 1:
 
             elapsed = (time.time() - thisTime)
             thisTime = time.time()
@@ -51,11 +50,11 @@ def L_layer_model(X, Y, layers_dims, learning_rate = 0.1, num_iterations = 3000,
     return parameters, costs
 
 #进行一次三千迭代的训练
-parameters, costs = L_layer_model(train_X, train_Y, layers_dims, num_iterations = 3000, print_cost = True)
+parameters, costs = L_layer_model(train_X, train_Y, layers_dims, num_iterations = 400, print_cost = True)
 
 #保存训练的参数
 
-np.save('./model/DNN3000.npy',parameters)
+np.save('./model/DNN3000-1.npy',parameters)
 
 #parameters = np.load('./model/DNN3000.npy', allow_pickle=True).item()
 

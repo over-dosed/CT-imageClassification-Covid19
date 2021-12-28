@@ -1,13 +1,3 @@
-## WeatherRecognition
-a simple network to recognize weather form a picture
-# To get the dataset:
-https://www.kaggle.com/jehanbhathena/weather-dataset
-# 数据集介绍
-数据集由11个天气类，共6862张大小不一的天气图片组成
-The pictures are divided into 11 classes: dew, fog/smog, frost, glaze, hail, lightning , rain, rainbow, rime, sandstorm and snow.
-# 数据集处理
-为处理方便，我采用图片下采样处理初始数据集，并将处理后的图片进行分割为训练集train,验证集val；以txt形式存储便于读取
-
 ## 天气预测失败，模型无法收敛，cost无法下降。转而使用CT图像预测新冠肺炎
 
 # To get the dataset:
@@ -26,6 +16,19 @@ http://ictcf.biocuckoo.cn/
 np的reshape和T转置函数，得到
 训练数据向量shape为：（64*64*3，17714） ，训练label向量shape为：（3，17714） // 3为类别，17714是样本数目
 
+ # 模型设置
+具有一个大小为30的隐藏层的DNN全连接层线性神经网络模型
+
+layers_dims = [n_x,50,30,20,10,config.numClass]  //4个大小为 50、30、20、10的隐藏层
+
+ # 模型训练与结果
+ 设备： 搭载intel 9750h 电脑，16GB Ram内存
+ 训练3000 epoch ，cost 与 accuracy 结果如下：（训练过程保存于log文件中）
+
+Cost after iteration 399: -0.9774290877834428
+train accuracy = 0.9908546912046968
+test accuracy = 0.97866937531742
+
 # 模型设置
 具有一个大小为30的隐藏层的DNN全连接层线性神经网络模型
 
@@ -42,5 +45,3 @@ learing rate = 0.075           // 模型超参数
  cost after iteration 2999: -0.670973486088058
  train accuracy = 0.7724398780625494
  test  accuracy = 0.7694261046216353
-
- # 实验结束
